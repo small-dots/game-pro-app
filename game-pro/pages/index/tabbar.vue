@@ -13,7 +13,7 @@
 						<image v-if="PageCur=='index'" src="../../static/tabBar/index_cur.png"></image>
 						<image v-if="PageCur != 'index'" src="../../static/tabBar/index.png"></image>
 					</view>
-					<view :class="PageCur=='index'?'color_main':'text-gray'">首页</view>
+					<view :class="PageCur=='index'?'color_main':'text-gray'">数据概览</view>
 				</view>
 
 				<view class="action" @click="NavChange" data-cur="search">
@@ -21,30 +21,28 @@
 						<image v-if="PageCur=='search'" src="../../static/tabBar/shop_cur.png"></image>
 						<image v-if="PageCur != 'search'" src="../../static/tabBar/shop.png"></image>
 					</view>
-					<view :class="PageCur=='search'?'color_main':'text-gray'">技术栈</view>
+					<view :class="PageCur=='search'?'color_main':'text-gray'">发布公告</view>
 				</view>
 
 				<view @click="NavChange" class="action text-gray add-action" data-cur="cases">
 					<image class="logo_btn" mode="widthFix" src="../../static/logo.png"></image>
-					<view :class="PageCur=='cases'?'color_main':'text-gray'">组件模板</view>
+					<view :class="PageCur=='cases'?'color_main':'text-gray'">外挂检测</view>
 				</view>
 
 				<view class="action" @click="NavChange" data-cur="news">
 					<view class='cuIcon-cu-image'>
-						<view class="cu-tag badge">{{message}}</view>
 						<image v-if="PageCur=='news'" src="../../static/tabBar/order_cur.png"></image>
 						<image v-if="PageCur != 'news'" src="../../static/tabBar/order.png"></image>
 					</view>
-					<view :class="PageCur=='news'?'color_main':'text-gray'">文章资讯</view>
+					<view :class="PageCur=='news'?'color_main':'text-gray'">CDK</view>
 				</view>
 
 				<view class="action" @click="NavChange" data-cur="me">
 					<view class='cuIcon-cu-image'>
-						<view class="cu-tag badge"><!-- 红点 --></view>
 						<image v-if="PageCur=='me'" src="../../static/tabBar/me_cur.png"></image>
 						<image v-if="PageCur != 'me'" src="../../static/tabBar/me.png"></image>
 					</view>
-					<view :class="PageCur=='me'?'color_main':'text-gray'">个人中心</view>
+					<view :class="PageCur=='me'?'color_main':'text-gray'">邮件发送</view>
 				</view>
 
 			</view>
