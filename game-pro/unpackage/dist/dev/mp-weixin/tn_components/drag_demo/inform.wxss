@@ -1,0 +1,7 @@
+
+.info {
+	text-indent: 2em;
+	font-size: 28rpx;
+	text-align: justify;
+}
+

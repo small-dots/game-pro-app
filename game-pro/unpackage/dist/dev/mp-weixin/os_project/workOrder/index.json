@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#2695FE",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "订单详情",
+  "backgroundColorTop": "#2695FE",
+  "backgroundColorBottom": "#2695FE",
+  "usingComponents": {}
+}

@@ -1,0 +1,259 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.topBg.data-v-0fc6ce45 {
+  width: 100%;
+  background: url(https://zhoukaiwen.com/img/qdpz/topBg.png);
+  height: 400rpx;
+  padding-top: 80rpx;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+.b-card.data-v-0fc6ce45 {
+  background-color: #fefefe;
+  background-image: linear-gradient(-45deg, #e8e9ec, #f2f2f2);
+  padding: 30rpx 40rpx;
+  margin: 0 30rpx;
+  height: 500rpx;
+  border-radius: 20rpx;
+  box-shadow: 2rpx 2rpx 2rpx #efeef3;
+  color: #9a9ca1;
+}
+.b-card .heard.data-v-0fc6ce45 {
+  color: #6f7275;
+}
+.b-card .text.data-v-0fc6ce45 {
+  background-color: #d8dcdd;
+}
+.b-card .outer.data-v-0fc6ce45 {
+  background-color: #d8dcdd;
+}
+.b-card .outer .inside.data-v-0fc6ce45 {
+  background-color: #6f7275;
+}
+.b-card .rangle .rangle-text.data-v-0fc6ce45 {
+  background-color: #6f7275;
+}
+.b-level-1.data-v-0fc6ce45 {
+  background-image: linear-gradient(45deg, #dde1ea, #a3abb8);
+  color: #34424b;
+}
+.b-level-1 .heard.data-v-0fc6ce45 {
+  color: #34424b;
+}
+.b-level-1 .text.data-v-0fc6ce45 {
+  background-color: #e4e9ed;
+}
+.b-level-1 .outer.data-v-0fc6ce45 {
+  background-color: #e4e9ed;
+}
+.b-level-1 .outer .inside.data-v-0fc6ce45 {
+  background-color: #34424b;
+}
+.b-level-1 .rangle .rangle-text.data-v-0fc6ce45 {
+  background-color: #34424b;
+}
+.b-level-2.data-v-0fc6ce45 {
+  background-image: linear-gradient(45deg, #f0daa4, #d1a165);
+  color: #323b4a;
+}
+.b-level-2 .heard.data-v-0fc6ce45 {
+  color: #313a49;
+}
+.b-level-2 .text.data-v-0fc6ce45 {
+  background-color: #e4e7ec;
+}
+.b-level-2 .outer.data-v-0fc6ce45 {
+  background-color: #e4e7ec;
+}
+.b-level-2 .outer .inside.data-v-0fc6ce45 {
+  background-color: #313a49;
+}
+.b-level-2 .rangle .rangle-text.data-v-0fc6ce45 {
+  background-color: #323b4a;
+}
+.b-level-3.data-v-0fc6ce45 {
+  background-image: linear-gradient(45deg, #ddc1b5, #c59073);
+  color: #333333;
+}
+.b-level-3 .heard.data-v-0fc6ce45 {
+  color: #333333;
+}
+.b-level-3 .text.data-v-0fc6ce45 {
+  background-color: #e8e8e8;
+}
+.b-level-3 .outer.data-v-0fc6ce45 {
+  background-color: #e8e8e8;
+}
+.b-level-3 .outer .inside.data-v-0fc6ce45 {
+  background-color: #333333;
+}
+.b-level-3 .rangle .rangle-text.data-v-0fc6ce45 {
+  background-color: #333333;
+}
+.b-level-4.data-v-0fc6ce45 {
+  background-image: linear-gradient(45deg, #303030, #1a1a1a);
+  color: #f0daa4;
+}
+.b-level-4 .heard.data-v-0fc6ce45 {
+  color: #f0daa4;
+}
+.b-level-4 .text.data-v-0fc6ce45 {
+  background-color: #f2e3c4;
+  color: #77582a;
+}
+.b-level-4 .outer.data-v-0fc6ce45 {
+  background-color: #f2e3c4;
+}
+.b-level-4 .outer .inside.data-v-0fc6ce45 {
+  background-color: #f2e3c4;
+}
+.b-level-4 .rangle .rangle-text.data-v-0fc6ce45 {
+  background-color: #77582a;
+}
+.warp .swiper.data-v-0fc6ce45 {
+  height: 600rpx;
+}
+.warp .swiper .progress .heard.data-v-0fc6ce45 {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  line-height: 120rpx;
+}
+.warp .swiper .progress .title.data-v-0fc6ce45 {
+  font-size: 28rpx;
+}
+.warp .swiper .progress .progress-artice.data-v-0fc6ce45 {
+  margin-top: 30rpx;
+  font-size: 28rpx;
+}
+.warp .swiper .progress .progress-artice .outer.data-v-0fc6ce45 {
+  height: 10rpx;
+  border-radius: 20rpx;
+  margin: 0;
+  overflow: hidden;
+}
+.warp .swiper .progress .progress-artice .outer .inside.data-v-0fc6ce45 {
+  height: 100%;
+}
+.warp .swiper .progress .progress-artice .content.data-v-0fc6ce45 {
+  margin: 0;
+  display: flex;
+  text-align: right;
+}
+.warp .swiper .progress .progress-artice .content .content-item.data-v-0fc6ce45 {
+  display: flex;
+  flex-direction: column;
+}
+.warp .swiper .progress .progress-artice .content .content-item .rangle.data-v-0fc6ce45 {
+  height: 10rpx;
+  line-height: 10rpx;
+  margin-top: -10rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.warp .swiper .progress .progress-artice .content .content-item .rangle .rangle-text.data-v-0fc6ce45 {
+  width: 10rpx;
+  height: 10rpx;
+  display: inline-block;
+  border-radius: 50%;
+  display: none;
+}
+.warp .swiper .progress .progress-artice .content .content-item .rangle .rangle-gift.data-v-0fc6ce45 {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: #cacdd0;
+  display: inline-block;
+  border-radius: 50%;
+}
+.warp .swiper .progress .progress-artice .content .content-item .rangle .achieveClass.data-v-0fc6ce45 {
+  background-color: #765528;
+}
+.warp .swiper .progress .progress-artice .content .content-item .level.data-v-0fc6ce45 {
+  margin-top: 50rpx;
+  margin-right: -20rpx;
+}
+.warp .swiper .progress .progress-artice .content .content-item:nth-child(4) .level.data-v-0fc6ce45 {
+  margin-right: 0rpx;
+}
+.warp .swiper .progress .text.data-v-0fc6ce45 {
+  margin-top: 60rpx;
+  padding: 20rpx 20rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.warp .swiper .progress .text .text-des.data-v-0fc6ce45 {
+  font-size: 20rpx;
+  font-weight: 300;
+}
+.warp .medal.data-v-0fc6ce45 {
+  margin: 10rpx 30rpx;
+}
+.warp .medal .medal-title.data-v-0fc6ce45 {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #30333b;
+  padding: 0 10rpx;
+}
+.warp .medal .medal-title .text.data-v-0fc6ce45 {
+  font-size: 28rpx;
+  font-weight: 300;
+  color: #7c7f81;
+  margin-left: 10rpx;
+}
+.warp .medal .medal-box.data-v-0fc6ce45 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.warp .medal .medal-box .medal-item.data-v-0fc6ce45 {
+  width: 33.3333333333333%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40rpx;
+}
+.warp .medal .medal-box .medal-item .img.data-v-0fc6ce45 {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+}
+.warp .medal .medal-box .medal-item .title.data-v-0fc6ce45 {
+  font-size: 24rpx;
+  line-height: 60rpx;
+  font-weight: 600;
+  color: #30333b;
+}
+.warp .medal .medal-box .medal-item .text.data-v-0fc6ce45 {
+  font-size: 24rpx;
+  color: #7c7f81;
+}
+

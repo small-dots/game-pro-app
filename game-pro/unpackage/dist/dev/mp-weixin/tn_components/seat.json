@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "在线选座",
+  "usingComponents": {
+    "anil-seat": "/components/anil-seat/components/anil-seat/anil-seat"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "每日签到",
+  "usingComponents": {
+    "u-count-to": "/uview-ui/components/u-count-to/u-count-to"
+  }
+}
