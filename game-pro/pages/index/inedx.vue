@@ -41,6 +41,117 @@
 		</view> -->
 
 		<view class="padding-cust">
+			<!-- 卡片组 -->
+			<view class="cards">
+				<view class="card-item">
+					<view class="icon" style="background: #ff9709;">
+						<u-icon name="man-add" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							新增用户
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="500" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="man-add" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<view class="card-item">
+					<view class="icon" style="background: #286aff;">
+						<u-icon name="rmb" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							充值数据
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="109" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">元</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<view class="card-item">
+					<view class="icon" style="background: #ff5c5c;">
+						<u-icon name="server-fill" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							在线用户
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="52" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="server-fill" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<view class="card-item">
+					<view class="icon" style="background: #4ac9af;">
+						<u-icon name="search" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							新增用户
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="40" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<view class="card-item">
+					<view class="icon" style="background: #4ac9af;">
+						<u-icon name="search" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							新增用户
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="40" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<view class="card-item">
+					<view class="icon" style="background: #4ac9af;">
+						<u-icon name="search" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							新增用户
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="40" :duration="2000" :useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+			</view>
+			<!-- 按钮日期 -->
+			<u-subsection :list="list" :current="current" @change="sectionChange"></u-subsection>
+			<view class="currentRange" v-if="currentRange">
+				{{currentRange}}
+			</view>
+			<!-- 图表组 -->
 			<view class="cu-bar bg-white margin-top-xs border-t-cust">
 				<view class="action sub-title">
 					<text class="text-xl text-bold text-blue text-shadow">历史新增用户</text>
@@ -74,9 +185,7 @@
 			</view>
 		</view>
 
-
-
-
+		<u-calendar mode="range" v-model="showCa" @change="dateConfirm" @close="closeCa"></u-calendar>
 		<view style="height: 140rpx;width: 1rpx;"></view>
 	</view>
 </template>
@@ -99,9 +208,12 @@
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
-
-
-
+				currentRange:"",
+				showCa: false,
+				list: ['近三天', '近七天', '近半月', '更多日期'],
+				// 或者如下，也可以配置keyName参数修改对象键名
+				// list: [{name: '未付款'}, {name: '待评价'}, {name: '已付款'}],
+				current: 1,
 				// 柱状图
 				"Column": {
 					"categories": ["2012", "2013", "2014", "2015", "2016", "2017"],
@@ -299,7 +411,23 @@
 					}
 				});
 			},
-
+			sectionChange(index) {
+				var that =this 
+				console.log(that.current)
+				that.current = index;
+				
+				if(index==3){
+					that.showCa=true
+				}else{
+					this.currentRange = ""
+				}
+				
+			},
+			dateConfirm(e){
+				this.currentRange = e.startDate+" ~ "+e.endDate
+				// this.currentRange = e.startMonth+"/"+e.startDay+"~"+e.endMonth+"/"+e.endDay
+			},
+			closeCa(){}
 		}
 	};
 </script>
@@ -307,18 +435,20 @@
 	.swiper-box {
 		flex: 1;
 	}
-	.padding-cust{
-		padding:10rpx 15rpx;
+
+	.padding-cust {
+		padding: 10rpx 15rpx;
 	}
 
 	.swiper-item {
 		height: 100%;
 	}
 
-.border-t-cust{
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-}
+	.border-t-cust {
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+	}
+
 	.chartsMain {
 		width: 100%;
 		height: 450rpx;
@@ -328,10 +458,77 @@
 		border-top: 2rpx solid #f2f2f2;
 		border-bottom-left-radius: 10rpx;
 		border-bottom-right-radius: 10rpx;
+
 		.charts {
 			width: 100%;
 			height: 450rpx;
 			box-sizing: border-box;
+		}
+	}
+
+	.currentRange{
+		padding: 20rpx;
+	}
+	.cards {
+		display: flex;
+		flex-wrap: wrap;
+
+		.card-item {
+			position: relative;
+			flex: calc(50% - 20rpx);
+			padding: 40rpx 20rpx;
+			margin-bottom: 20rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 10rpx;
+			background: #fff;
+
+			&:nth-child(odd) {
+				margin-right: 10rpx;
+			}
+
+			&:nth-child(even) {
+				margin-left: 10rpx;
+			}
+
+			.icon {
+				margin-right: 20rpx;
+				border-radius: 50%;
+				padding: 15rpx;
+			}
+
+			.icon-bg {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin-right: 20rpx;
+				padding: 15rpx;
+				opacity: 0.04;
+			}
+
+			.num-label {
+				display: flex;
+				flex-direction: column;
+
+				.label {
+					margin-bottom: 10rpx;
+					color: #606266;
+				}
+
+				.num {
+					font-weight: 500;
+				}
+
+				.color-3 {
+					color: #303133;
+				}
+
+				.color-2 {
+					color: #606266;
+					margin-left: 10rpx;
+				}
+			}
 		}
 	}
 </style>
