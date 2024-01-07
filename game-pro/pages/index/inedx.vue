@@ -147,11 +147,16 @@
 				</view>
 			</view>
 			<!-- 按钮日期 -->
-			<u-subsection :list="list" :current="current" @change="sectionChange"></u-subsection>
+			<!-- 图表组 -->
+			<view class="btn-group">
+				<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}" v-for="btn,index in 4" :key="index">
+					{{list[index]}}
+				</view>
+			</view>
+			
 			<view class="currentRange" v-if="currentRange">
 				{{currentRange}}
 			</view>
-			<!-- 图表组 -->
 			<view class="cu-bar bg-white margin-top-xs border-t-cust">
 				<view class="action sub-title">
 					<text class="text-xl text-bold text-blue text-shadow">历史新增用户</text>
@@ -208,7 +213,7 @@
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
-				currentRange:"",
+				currentRange: "",
 				showCa: false,
 				list: ['近三天', '近七天', '近半月', '更多日期'],
 				// 或者如下，也可以配置keyName参数修改对象键名
@@ -412,22 +417,21 @@
 				});
 			},
 			sectionChange(index) {
-				var that =this 
-				console.log(that.current)
+				var that = this
 				that.current = index;
-				
-				if(index==3){
-					that.showCa=true
-				}else{
+
+				if (index == 3) {
+					that.showCa = true
+				} else {
 					this.currentRange = ""
 				}
-				
+
 			},
-			dateConfirm(e){
-				this.currentRange = e.startDate+" ~ "+e.endDate
+			dateConfirm(e) {
+				this.currentRange = e.startDate + " ~ " + e.endDate
 				// this.currentRange = e.startMonth+"/"+e.startDay+"~"+e.endMonth+"/"+e.endDay
 			},
-			closeCa(){}
+			closeCa() {}
 		}
 	};
 </script>
@@ -466,9 +470,10 @@
 		}
 	}
 
-	.currentRange{
+	.currentRange {
 		padding: 20rpx;
 	}
+
 	.cards {
 		display: flex;
 		flex-wrap: wrap;
@@ -529,6 +534,35 @@
 					margin-left: 10rpx;
 				}
 			}
+		}
+	}
+
+	.btn-group {
+		display: flex;
+		padding: 10rpx 0;
+		.btn-item {
+			flex: 1;
+			background: transparent;
+			border-radius: 5px;
+			line-height: 32px;
+			text-align: center;
+			font-size: 15px;
+			height: 100%;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			color: #303133;
+			padding: 0 6px;
+			transition: all 0.3s;
+
+			&:hover {
+				background: #fff;
+			}
+		}
+		.btn-active{
+			font-weight: bold;
+			background: #fff;
 		}
 	}
 </style>
