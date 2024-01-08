@@ -11,7 +11,10 @@
 				<u-subsection active-color="#2b57fd" bgColor="#f5f5f6" buttonColor="#fff" :list="rlist"
 					:current="0"></u-subsection>
 			</view>
-
+			<text class="u-demo-block__title">玩家ID</text>
+			<view class="u-demo-block__content">
+				<u-input placeholder="请输入玩家ID" :border="true" clearable></u-input>
+			</view>
 			<text class="u-demo-block__title">邮件标题</text>
 			<view class="u-demo-block__content">
 				<u-input placeholder="请输入邮件标题" focus :border="true" clearable></u-input>
