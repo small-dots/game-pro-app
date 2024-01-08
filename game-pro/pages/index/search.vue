@@ -64,39 +64,6 @@
 				})
 			},
 			closeCa() {},
-			getImg() {
-				return Math.floor(Math.random() * 35);
-			},
-			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if (index == this.current) return;
-				this.current = index;
-				// 如果为0，意味着尚未初始化
-				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
-					await this.getElRect('menu-scroll-view', 'menuHeight');
-					await this.getElRect('u-tab-item', 'menuItemHeight');
-				}
-				// 将菜单菜单活动item垂直居中
-				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-			},
-			// 获取一个目标元素的高度
-			getElRect(elClass, dataVal) {
-				new Promise((resolve, reject) => {
-					const query = uni.createSelectorQuery().in(this);
-					query.select('.' + elClass).fields({
-						size: true
-					}, res => {
-						// 如果节点尚未生成，res值为null，循环调用执行
-						if (!res) {
-							setTimeout(() => {
-								this.getElRect(elClass);
-							}, 10);
-							return;
-						}
-						this[dataVal] = res.height;
-					}).exec();
-				})
-			}
 		}
 	}
 </script>
@@ -113,8 +80,10 @@
 
 	.u-demo-block {
 		padding: 40rpx;
-		margin: 23px 0;
-
+		margin: 10rpx 15rpx;
+		border-radius: 10rpx;
+		background: #fff;
+		box-shadow: #fff 0 0 2px;
 		.u-demo-block__title {
 			font-size: 14px;
 			color: #8f9ca2;

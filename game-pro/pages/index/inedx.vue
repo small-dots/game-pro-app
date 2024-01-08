@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="false">
 			<!-- <block slot="backText">返回</block> -->
-			<block slot="content">首页</block>
+			<block slot="content">数据概览</block>
 		</cu-custom>
 
 		<!-- <add-tip :tip="tip" :duration="duration" /> -->
@@ -148,45 +148,68 @@
 			</view>
 			<!-- 按钮日期 -->
 			<!-- 图表组 -->
-			<view class="btn-group">
-				<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}" v-for="btn,index in 4" :key="index">
+			<!-- <view class="btn-group">
+				<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
+					v-for="btn,index in 4" :key="index">
 					{{list[index]}}
 				</view>
-			</view>
-			
+			</view> -->
+
 			<view class="currentRange" v-if="currentRange">
 				{{currentRange}}
 			</view>
-			<view class="cu-bar bg-white margin-top-xs border-t-cust">
-				<view class="action sub-title">
-					<text class="text-xl text-bold text-blue text-shadow">历史新增用户</text>
-					<text class="text-ABC text-blue">XinZengYongHu</text>
+			<view class="box-s">
+				<view class="cu-bar bg-white margin-top-xs border-t-cust">
+					<view class="action sub-title">
+						<text class="text-xl text-bold text-balck text-shadow">历史新增用户</text>
+						<text class="text-ABC text-balck">XinZengYongHu</text>
+					</view>
+				</view>
+				<view class="btn-group">
+					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
+						v-for="btn,index in 4" :key="index">
+						{{list[index]}}
+					</view>
+				</view>
+				<view class="chartsMain">
+					<canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas>
 				</view>
 			</view>
-			<view class="chartsMain">
-				<canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas>
-			</view>
 
-			<view class="cu-bar bg-white margin-top-xs border-t-cust">
-				<view class="action sub-title">
-					<text class="text-xl text-bold text-blue text-shadow">历史充值数据</text>
-					<text class="text-ABC text-blue">ChongZhiShuJu</text>
+			<view class="box-s">
+				<view class="cu-bar bg-white margin-top-xs border-t-cust">
+					<view class="action sub-title">
+						<text class="text-xl text-bold text-balck text-shadow">历史充值数据</text>
+						<text class="text-ABC text-balck">ChongZhiShuJu</text>
+					</view>
+				</view>
+				<view class="btn-group">
+					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
+						v-for="btn,index in 4" :key="index">
+						{{list[index]}}
+					</view>
+				</view>
+				<view class="chartsMain">
+					<canvas canvas-id="canvasArea1" id="canvasArea1" class="charts" @touchstart="touchArea1"></canvas>
 				</view>
 			</view>
-			<view class="chartsMain">
-				<canvas canvas-id="canvasArea1" id="canvasArea1" class="charts" @touchstart="touchArea1"></canvas>
-			</view>
-
-
-
-			<view class="cu-bar bg-white margin-top-xs border-t-cust">
-				<view class="action sub-title">
-					<text class="text-xl text-bold text-blue text-shadow">各平台数据统计</text>
-					<text class="text-ABC text-blue">PlatformStatistic</text>
+			<view class="box-s">
+				<view class="cu-bar bg-white margin-top-xs border-t-cust">
+					<view class="action sub-title">
+						<text class="text-xl text-bold text-balck  text-shadow">各平台数据统计</text>
+						<text class="text-ABC text-balck">PlatformStatistic</text>
+					</view>
 				</view>
-			</view>
-			<view class="chartsMain">
-				<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" @touchstart="touchColumn"></canvas>
+				<view class="btn-group">
+					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
+						v-for="btn,index in 4" :key="index">
+						{{list[index]}}
+					</view>
+				</view>
+				<view class="chartsMain">
+					<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"
+						@touchstart="touchColumn"></canvas>
+				</view>
 			</view>
 		</view>
 
@@ -215,7 +238,7 @@
 				pixelRatio: 1,
 				currentRange: "",
 				showCa: false,
-				list: ['近三天', '近七天', '近半月', '更多日期'],
+				list: ['近一周',  '近半月','近一个月', '更多日期'],
 				// 或者如下，也可以配置keyName参数修改对象键名
 				// list: [{name: '未付款'}, {name: '待评价'}, {name: '已付款'}],
 				current: 1,
@@ -224,14 +247,17 @@
 					"categories": ["2012", "2013", "2014", "2015", "2016", "2017"],
 					"series": [{
 							"name": "微信小程序",
-							"data": [15, 20, 145, 37, 4, 34]
+							"data": [15, 20, 145, 37, 4, 34],
+							"color":"#668bf5"
 						}, {
 							"name": "TAP",
-							"data": [30, 140, 25, 14, 34, 18]
+							"data": [30, 140, 25, 14, 34, 18],
+							"color":"#f07759"
 						},
 						{
 							"name": "信息流",
-							"data": [10, 4, 25, 14, 34, 48]
+							"data": [10, 4, 25, 14, 34, 48],
+							"color":"#2fc25b"
 						}
 					]
 				},
@@ -244,7 +270,7 @@
 					series: [{
 						name: '历史新增用户',
 						data: [100, 80, 95, 150, 112, 132, 151],
-						color: '#facc14'
+						color: '#f07759'
 					}]
 				},
 
@@ -284,6 +310,7 @@
 					type: 'column',
 					legend: true,
 					fontSize: 11,
+					color:"#dcdcdc",
 					background: '#FFFFFF',
 					pixelRatio: _self.pixelRatio,
 					animation: true,
@@ -293,7 +320,10 @@
 						disableGrid: true,
 					},
 					yAxis: {
-						//disabled:true
+						type: 'grid',
+						gridColor: '#CCCCCC',
+						gridType: 'dash',
+						dashLength: 8
 					},
 					dataLabel: true,
 					width: _self.cWidth * _self.pixelRatio,
@@ -352,10 +382,11 @@
 					height: _self.cHeight * _self.pixelRatio,
 					extra: {
 						area: {
-							type: 'straight',
-							opacity: 0.2,
+							type: 'curve',
+							opacity: 1,
 							addLine: true,
-							width: 2
+							width: 2,
+							gradient:true
 						}
 					}
 				});
@@ -363,14 +394,14 @@
 			touchArea(e) {
 				canvaArea.showToolTip(e, {
 					format: function(item, category) {
-						return item.name + ' ' + category + ' ' + ':' + item.data
+						return item.name + ' ' + category + ' ' + ':' + item.data+" 人"
 					}
 				});
 			},
 
 			// 折线图
 			showArea1(canvasId, chartData) {
-				canvaArea = new uCharts({
+				canvaArea1 = new uCharts({
 					$this: _self,
 					canvasId: canvasId,
 					type: 'area',
@@ -401,18 +432,19 @@
 					height: _self.cHeight * _self.pixelRatio,
 					extra: {
 						area: {
-							type: 'straight',
-							opacity: 0.2,
+							type: 'curve',
+							opacity: 1,
 							addLine: true,
-							width: 2
+							width: 2,
+							gradient:true
 						}
 					}
 				});
 			},
-			touchArea(e) {
+			touchArea1(e) {
 				canvaArea1.showToolTip(e, {
 					format: function(item, category) {
-						return item.name + ' ' + category + ' ' + ':' + item.data
+						return item.name + ' ' + category + ' ' + ':' + item.data+" 元"
 					}
 				});
 			},
@@ -488,6 +520,7 @@
 			justify-content: center;
 			border-radius: 10rpx;
 			background: #fff;
+			box-shadow: #fff 0 0 2px;
 
 			&:nth-child(odd) {
 				margin-right: 10rpx;
@@ -540,29 +573,43 @@
 	.btn-group {
 		display: flex;
 		padding: 10rpx 0;
+		background: #fff;
+
 		.btn-item {
-			flex: 1;
-			background: transparent;
 			border-radius: 5px;
 			line-height: 32px;
 			text-align: center;
-			font-size: 15px;
+			font-size: 14px;
 			height: 100%;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			justify-content: center;
 			color: #303133;
-			padding: 0 6px;
+			padding: 0 24rpx;
+			border-radius: 30rpx;
 			transition: all 0.3s;
+			margin: 0 10rpx;
+			background: #f5f5f6;
 
 			&:hover {
-				background: #fff;
+				background: #2b57fd;
+				color: #fff;
 			}
 		}
-		.btn-active{
+
+		.btn-active {
 			font-weight: bold;
-			background: #fff;
+			background: #2b57fd;
+			color: #fff;
 		}
+	}
+
+	.text-balck {
+		color: #000 !important;
+	}
+
+	.box-s {
+		box-shadow: #ffffff 0px 0px 6px 0px;
 	}
 </style>
