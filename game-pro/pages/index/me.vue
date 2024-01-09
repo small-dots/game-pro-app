@@ -8,11 +8,11 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">发送对象</text>
 			<view class="u-demo-block__content">
-				<u-subsection active-color="#2b57fd" bgColor="#f5f5f6" buttonColor="#fff" :list="rlist"
+				<u-subsection active-color="#2b57fd" @change="sectionChange" bgColor="#f5f5f6" buttonColor="#fff" :list="rlist"
 					:current="0"></u-subsection>
 			</view>
-			<text class="u-demo-block__title">玩家ID</text>
-			<view class="u-demo-block__content">
+			<text v-if="showId" class="u-demo-block__title">玩家ID</text>
+			<view v-if="showId" class="u-demo-block__content">
 				<u-input placeholder="请输入玩家ID" :border="true" clearable></u-input>
 			</view>
 			<text class="u-demo-block__title">邮件标题</text>
@@ -56,11 +56,17 @@
 					name: "全服"
 				}, {
 					name: "指定用户"
-				}]
+				}],
+				showId:false
 			}
 		},
 		components: {
 			uInput
+		},
+		watch:{
+			current(va){
+				console.log(va)
+			}
 		},
 		computed: {
 
@@ -79,9 +85,9 @@
 				})
 			},
 			closeCa() {},
-			radioGroupChange(e) {
-				console.log(e)
-				this.dx = e
+			sectionChange(e) {
+				this.showId = e===1?true:false
+				// this.dx = e
 			},
 		}
 	}
@@ -110,6 +116,10 @@
 			margin-bottom: 8px;
 			display: flex;
 			flex-direction: row;
+		}
+
+		.u-demo-block__content {
+			margin-bottom: 20rpx;
 		}
 	}
 </style>

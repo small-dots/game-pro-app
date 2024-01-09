@@ -1,119 +1,121 @@
-<!-- TabBar 文章资讯 -->
 <template>
-	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="false">
+	<view class="u-wrap">
+		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<!-- <block slot="backText">返回</block> -->
-			<block slot="content">文章资讯</block>
+			<block slot="content">CDK</block>
 		</cu-custom>
 
-		<scroll-view scroll-x class="bg-white nav" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index == TabCur?'text-blue cur':''" v-for="(item,index) in navTop" :key="index" @tap="tabSelect"
-			 :data-id="index">
-				{{item.title}}
+		<view class="u-demo-block">
+			<!-- <text class="u-demo-block__title">cdk</text>
+			<view class="u-demo-block__content">
+				<u-subsection active-color="#2b57fd" @change="sectionChange" bgColor="#f5f5f6" buttonColor="#fff"
+					:list="rlist" :current="0"></u-subsection>
+			</view> -->
+			<text class="u-demo-block__title">cdk</text>
+			<view class="u-demo-block__content">
+				<u-input placeholder="请输入cdk" :border="true" clearable></u-input>
 			</view>
-		</scroll-view>
-		
-		<view class="cu-card article no-card">
-			<view class="cu-item shadow borderBottom" v-for="(item, index) in newsList" :key="index" @click="goNews(item.id)">
-				<view class="title"><view class="text-cut">{{item.title}}</view></view>
-				<view class="content">
-					<image :src="item.tImg" mode="aspectFit"></image>
-					<view class="desc">
-						<view class="text-content">{{item.introduceText}}</view>
-						<view class="margin-top-xs">
-							<view class="text-gray light sm round fl">{{item.time}}</view>
-							<view class="text-gray light sm round fr">
-								<text class="text-gray cuIcon-mark" style="font-size: 34rpx;"></text>
-								<text>{{item.read}}</text>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-		
 
+			<view class="u-demo-block__content" style="margin: 10px 0;">
+				<span @click="openC">过期日期</span>
+				<span style="margin-left: 20px;">{{currentDate}}</span>
+			</view>
+
+			<text class="u-demo-block__title">奖励</text>
+			<view class="u-demo-block__content">
+				<u-input placeholder="请输入邮件内容" height="200" type="textarea" :border="true" clearable></u-input>
+			</view>
+			<view class="u-demo-block__content" style="margin-top: 20px;">
+				<u-button type="primary" @click="publish">添加</u-button>
+			</view>
+			<u-toast ref="uToast" position="top" />
+			<u-calendar v-model="show" @change="dateConfirm" @close="closeCa"></u-calendar>
+		</view>
 	</view>
 </template>
 
 <script>
-	import request from '@/common/request.js';
+	import classifyData from "@/common/classify.data.js";
+	import uInput from "@/uview-ui/components/u-input/u-input.vue"
 	export default {
 		data() {
 			return {
-				TabCur: 0,
-				scrollLeft: 0,
-				newsList: '',
-				navTop:[
-					{
-						id: 1,
-						title: '全部'
-					},
-					{
-						id: 2,
-						title: 'UI设计'
-					},
-					{
-						id: 3,
-						title: 'Web前端'
-					},
-					{
-						id: 4,
-						title: 'Java后台'
-					},
-					{
-						id: 5,
-						title: '面试精选'
-					},
-					{
-						id: 6,
-						title: '技术前沿'
-					},
-					{
-						id: 7,
-						title: '更多资讯'
-					}
-				]
-			};
+				tabbar: classifyData,
+				scrollTop: 0, //tab标题的滚动条位置
+				current: 0, // 预设当前项的值
+				showSex: false,
+				modelNotice: {},
+				show: false,
+				currentDate: '',
+				dx: '',
+				rlist: [{
+					name: "全服"
+				}, {
+					name: "指定用户"
+				}],
+				showId: false
+			}
 		},
-		mounted() {
-			this.getData();
+		components: {
+			uInput
+		},
+		watch: {
+			current(va) {
+				console.log(va)
+			}
+		},
+		computed: {
+
 		},
 		methods: {
-			getData() {
-				let opts = {
-					url: 'json/newsList.json',
-					method: 'get'
-				};
-				uni.showLoading({
-					title: '加载中'
-				});
-				request.httpRequest(opts).then(res => {
-					// console.log(res);
-					uni.hideLoading();
-					if (res.statusCode == 200) {
-						this.newsList = res.data.data;
-						console.log(this.newsList);
-					} else {
-						console.log('数据请求错误～');
-					}
-				});
+			openC() {
+				this.show = true
 			},
-			tabSelect(e) {
-				this.TabCur = e.currentTarget.dataset.id;
-				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+			dateConfirm(e) {
+				this.currentDate = e.result
 			},
-			goNews(id){
-				uni.navigateTo({
-					url: '../news/news?id='+ id,
+			publish() {
+				this.$refs.uToast.show({
+					title: '发布成功',
+					type: 'success'
 				})
-			}
+			},
+			closeCa() {},
+			sectionChange(e) {
+				this.showId = e === 1 ? true : false
+				// this.dx = e
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.borderBottom{
-		border-bottom: 1px solid #f2f2f2;
+	.u-wrap {
+		height: calc(100vh);
+		/* #ifdef H5 */
+		height: calc(100vh - var(--window-top));
+		/* #endif */
+		display: flex;
+		flex-direction: column;
+	}
+
+	.u-demo-block {
+		padding: 40rpx;
+		margin: 10rpx 15rpx;
+		border-radius: 10rpx;
+		background: #fff;
+		box-shadow: #fff 0 0 2px;
+
+		.u-demo-block__title {
+			font-size: 14px;
+			color: #8f9ca2;
+			margin-bottom: 8px;
+			display: flex;
+			flex-direction: row;
+		}
+
+		.u-demo-block__content {
+			margin-bottom: 20rpx;
+		}
 	}
 </style>
