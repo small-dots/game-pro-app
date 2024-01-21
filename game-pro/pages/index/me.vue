@@ -8,8 +8,8 @@
 		<view class="u-demo-block">
 			<text class="u-demo-block__title">发送对象</text>
 			<view class="u-demo-block__content">
-				<u-subsection active-color="#2b57fd" @change="sectionChange" bgColor="#f5f5f6" buttonColor="#fff" :list="rlist"
-					:current="0"></u-subsection>
+				<u-subsection active-color="#2b57fd" @change="sectionChange" bgColor="#f5f5f6" buttonColor="#fff"
+					:list="rlist" :current="0"></u-subsection>
 			</view>
 			<text v-if="showId" class="u-demo-block__title">玩家ID</text>
 			<view v-if="showId" class="u-demo-block__content">
@@ -57,14 +57,14 @@
 				}, {
 					name: "指定用户"
 				}],
-				showId:false
+				showId: false
 			}
 		},
 		components: {
 			uInput
 		},
-		watch:{
-			current(va){
+		watch: {
+			current(va) {
 				console.log(va)
 			}
 		},
@@ -86,7 +86,7 @@
 			},
 			closeCa() {},
 			sectionChange(e) {
-				this.showId = e===1?true:false
+				this.showId = e === 1 ? true : false
 				// this.dx = e
 			},
 		}

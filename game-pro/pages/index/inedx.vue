@@ -49,10 +49,11 @@
 					</view>
 					<view class="num-label">
 						<view class="label  text-lg">
-							新增用户
+							今日新增用户
 						</view>
 						<view class="num text-xxl">
-							<u-count-to :start-val="0" :end-val="500" :duration="2000" :useEasing="false"></u-count-to>
+							<u-count-to :start-val="0" :end-val="addUser" :duration="2000"
+								:useEasing="false"></u-count-to>
 							<span class="color-2 text-sm">人</span>
 						</view>
 					</view>
@@ -62,19 +63,20 @@
 				</view>
 				<view class="card-item">
 					<view class="icon" style="background: #286aff;">
-						<u-icon name="rmb" color="#fff" :size="48"></u-icon>
+						<u-icon name="man-add" color="#fff" :size="48"></u-icon>
 					</view>
 					<view class="num-label">
 						<view class="label  text-lg">
-							充值数据
+							用户数量总计
 						</view>
 						<view class="num text-xxl">
-							<u-count-to :start-val="0" :end-val="109" :duration="2000" :useEasing="false"></u-count-to>
-							<span class="color-2 text-sm">元</span>
+							<u-count-to :start-val="0" :end-val="totalUser" :duration="2000"
+								:useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">人</span>
 						</view>
 					</view>
 					<view class="icon-bg">
-						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+						<u-icon name="man-add" color="#000" :size="100"></u-icon>
 					</view>
 				</view>
 				<view class="card-item">
@@ -83,10 +85,11 @@
 					</view>
 					<view class="num-label">
 						<view class="label  text-lg">
-							在线用户
+							当前在线用户
 						</view>
 						<view class="num text-xxl">
-							<u-count-to :start-val="0" :end-val="52" :duration="2000" :useEasing="false"></u-count-to>
+							<u-count-to :start-val="0" :end-val="onlineUser" :duration="2000"
+								:useEasing="false"></u-count-to>
 							<span class="color-2 text-sm">人</span>
 						</view>
 					</view>
@@ -96,15 +99,16 @@
 				</view>
 				<view class="card-item">
 					<view class="icon" style="background: #4ac9af;">
-						<u-icon name="search" color="#fff" :size="48"></u-icon>
+						<u-icon name="rmb" color="#fff" :size="48"></u-icon>
 					</view>
 					<view class="num-label">
 						<view class="label  text-lg">
-							新增用户
+							今日充值金额
 						</view>
 						<view class="num text-xxl">
-							<u-count-to :start-val="0" :end-val="40" :duration="2000" :useEasing="false"></u-count-to>
-							<span class="color-2 text-sm">人</span>
+							<u-count-to :start-val="0" :end-val="addAmount" :duration="2000"
+								:useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">元</span>
 						</view>
 					</view>
 					<view class="icon-bg">
@@ -112,6 +116,24 @@
 					</view>
 				</view>
 				<view class="card-item">
+					<view class="icon" style="background: #422ec6;">
+						<u-icon name="rmb" color="#fff" :size="48"></u-icon>
+					</view>
+					<view class="num-label">
+						<view class="label  text-lg">
+							总充值金额
+						</view>
+						<view class="num text-xxl">
+							<u-count-to :start-val="0" :end-val="totalAmount" :duration="2000"
+								:useEasing="false"></u-count-to>
+							<span class="color-2 text-sm">元</span>
+						</view>
+					</view>
+					<view class="icon-bg">
+						<u-icon name="rmb" color="#000" :size="100"></u-icon>
+					</view>
+				</view>
+				<!-- <view class="card-item">
 					<view class="icon" style="background: #4ac9af;">
 						<u-icon name="search" color="#fff" :size="48"></u-icon>
 					</view>
@@ -127,24 +149,7 @@
 					<view class="icon-bg">
 						<u-icon name="rmb" color="#000" :size="100"></u-icon>
 					</view>
-				</view>
-				<view class="card-item">
-					<view class="icon" style="background: #4ac9af;">
-						<u-icon name="search" color="#fff" :size="48"></u-icon>
-					</view>
-					<view class="num-label">
-						<view class="label  text-lg">
-							新增用户
-						</view>
-						<view class="num text-xxl">
-							<u-count-to :start-val="0" :end-val="40" :duration="2000" :useEasing="false"></u-count-to>
-							<span class="color-2 text-sm">人</span>
-						</view>
-					</view>
-					<view class="icon-bg">
-						<u-icon name="rmb" color="#000" :size="100"></u-icon>
-					</view>
-				</view>
+				</view> -->
 			</view>
 			<!-- 按钮日期 -->
 			<!-- 图表组 -->
@@ -155,9 +160,6 @@
 				</view>
 			</view> -->
 
-			<view class="currentRange" v-if="currentRange">
-				{{currentRange}}
-			</view>
 			<view class="box-s">
 				<view class="cu-bar bg-white margin-top-xs border-t-cust">
 					<view class="action sub-title">
@@ -166,9 +168,12 @@
 					</view>
 				</view>
 				<view class="btn-group">
-					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
-						v-for="btn,index in 4" :key="index">
-						{{list[index]}}
+					<view class="btn-item" @click="sectionChange(index,list[index],1)"
+						:class="{'btn-active':current==index}" v-for="btn,index in 3" :key="index">
+						近{{list[index]}}天
+					</view>
+					<view class="btn-item" @click="sectionChange(3,null,1)" :class="{'btn-active':current==3}">
+						{{currentRange1}}
 					</view>
 				</view>
 				<view class="chartsMain">
@@ -184,9 +189,12 @@
 					</view>
 				</view>
 				<view class="btn-group">
-					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
-						v-for="btn,index in 4" :key="index">
-						{{list[index]}}
+					<view class="btn-item" @click="sectionChange(index,list[index],2)"
+						:class="{'btn-active':current1==index}" v-for="btn,index in 3" :key="index">
+						近{{list[index]}}天
+					</view>
+					<view class="btn-item" @click="sectionChange(3,null,2)" :class="{'btn-active':current1==3}">
+						{{currentRange2}}
 					</view>
 				</view>
 				<view class="chartsMain">
@@ -201,9 +209,12 @@
 					</view>
 				</view>
 				<view class="btn-group">
-					<view class="btn-item" @click="sectionChange(index)" :class="{'btn-active':current==index}"
-						v-for="btn,index in 4" :key="index">
-						{{list[index]}}
+					<view class="btn-item" @click="sectionChange(index,list[index],3)"
+						:class="{'btn-active':current2==index}" v-for="btn,index in 3" :key="index">
+						近{{list[index]}}天
+					</view>
+					<view class="btn-item" @click="sectionChange(3,null,3)" :class="{'btn-active':current2==3}">
+						{{currentRange3}}
 					</view>
 				</view>
 				<view class="chartsMain">
@@ -236,28 +247,33 @@
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
-				currentRange: "",
+				currentRange1: "更多日期",
+				currentRange2: "更多日期",
+				currentRange3: "更多日期",
+				currnetIndexDate: 0,
 				showCa: false,
-				list: ['近一周',  '近半月','近一个月', '更多日期'],
+				list: ['3', '7', '15', '更多日期'],
 				// 或者如下，也可以配置keyName参数修改对象键名
 				// list: [{name: '未付款'}, {name: '待评价'}, {name: '已付款'}],
 				current: 1,
+				current1: 1,
+				current2: 1,
 				// 柱状图
 				"Column": {
-					"categories": ["2012", "2013", "2014", "2015", "2016", "2017"],
+					"categories": [],
 					"series": [{
 							"name": "微信小程序",
-							"data": [15, 20, 145, 37, 4, 34],
-							"color":"#668bf5"
+							"data": [],
+							"color": "#668bf5"
 						}, {
 							"name": "TAP",
-							"data": [30, 140, 25, 14, 34, 18],
-							"color":"#f07759"
+							"data": [],
+							"color": "#f07759"
 						},
 						{
 							"name": "信息流",
-							"data": [10, 4, 25, 14, 34, 48],
-							"color":"#2fc25b"
+							"data": [],
+							"color": "#2fc25b"
 						}
 					]
 				},
@@ -266,24 +282,28 @@
 
 				// 折线图
 				Area: {
-					categories: ['6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					categories: [],
 					series: [{
 						name: '历史新增用户',
-						data: [100, 80, 95, 150, 112, 132, 151],
+						data: [],
 						color: '#f07759'
 					}]
 				},
 
 				// 折线图
 				Area1: {
-					categories: ['6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+					categories: [],
 					series: [{
 						name: '历史充值数据',
-						data: [70, 40, 65, 100, 44, 68, 78],
+						data: [],
 						color: '#2fc25b'
 					}]
-				}
-
+				},
+				addUser: 0,
+				totalUser: 0,
+				onlineUser: 0,
+				addAmount: 0,
+				totalAmount: 0
 			};
 		},
 		onLoad() {
@@ -294,47 +314,135 @@
 			this.cWidth = uni.upx2px(700);
 			this.cHeight = uni.upx2px(420);
 			this.getServerData();
+			this.getStaticData();
+			this.getStaticData1();
+			this.getStaticData2();
 		},
 		methods: {
+			getStaticData() {
+				let opts = {
+					url: 'tj/login/count',
+					method: 'get'
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts).then(res => {
+					console.log(res);
+					uni.hideLoading();
+					if (res.statusCode == 200) {
+						this.onlineUser = res.data.data.login;
+						this.totalUser = res.data.data.all;
+					}
+				});
+			},
+			getStaticData1() {
+				let opts = {
+					url: 'tj/today/amount',
+					method: 'get'
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts).then(res => {
+					console.log(res);
+					uni.hideLoading();
+					if (res.statusCode == 200) {
+						this.addAmount = res.data.data.today;
+						this.totalAmount = res.data.data.all;
+					}
+				});
+			},
+			getStaticData2() {
+				let opts = {
+					url: 'tj/today/added',
+					method: 'get'
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts).then(res => {
+					console.log(res);
+					uni.hideLoading();
+					if (res.statusCode == 200) {
+						this.addUser = res.data.data;
+					}
+				});
+			},
 			getServerData() {
 				_self.showArea("canvasArea", this.chartData);
 				_self.showArea1("canvasArea1", this.chartData);
-
 				_self.showColumn("canvasColumn", this.Column);
 			},
+
+
 			// 柱状图
 			showColumn(canvasId, chartData) {
-				canvaColumn = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'column',
-					legend: true,
-					fontSize: 11,
-					color:"#dcdcdc",
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					animation: true,
-					categories: _self.Column.categories,
-					series: _self.Column.series,
-					xAxis: {
-						disableGrid: true,
-					},
-					yAxis: {
-						type: 'grid',
-						gridColor: '#CCCCCC',
-						gridType: 'dash',
-						dashLength: 8
-					},
-					dataLabel: true,
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						column: {
-							type: 'group',
-							width: _self.cWidth * _self.pixelRatio * 0.45 / _self.Column.categories.length
-						}
+				let opts = {
+					url: 'tj/plat',
+					method: 'post',
+					data: {}
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts, {
+					kssj: this.getDatesWithinSevenDays(7).futureDate,
+					jssj: this.getDatesWithinSevenDays(7).currentDate
+				}).then(res => {
+					console.log('dasdasd', res);
+					uni.hideLoading();
+					_self.Column.series[0].data = []
+					_self.Column.series[1].data = []
+					_self.Column.series[2].data = []
+					_self.Column.categories = []
+					if (res.statusCode == 200) {
+						res.data.map(item => {
+							// const num = item.tap+item.xxl+item.weixin
+							_self.Column.series[0].data.push(item.weixin)
+							_self.Column.series[1].data.push(item.tap)
+							_self.Column.series[2].data.push(item.xxl)
+							_self.Column.categories.push(item.zb)
+						});
+
+						canvaColumn = new uCharts({
+							$this: _self,
+							canvasId: canvasId,
+							type: 'column',
+							legend: true,
+							fontSize: 11,
+							color: "#dcdcdc",
+							background: '#FFFFFF',
+							pixelRatio: _self.pixelRatio,
+							animation: true,
+							categories: _self.Column.categories,
+							series: _self.Column.series,
+							enableScroll: true,
+							xAxis: {
+								disableGrid: true,
+								itemCount: 5
+							},
+							yAxis: {
+								type: 'grid',
+								gridColor: '#CCCCCC',
+								gridType: 'dash',
+								dashLength: 8
+							},
+							dataLabel: true,
+							width: _self.cWidth * _self.pixelRatio,
+							height: _self.cHeight * _self.pixelRatio,
+							extra: {
+								column: {
+									type: 'group',
+									width: _self.cWidth * _self.pixelRatio * 0.45 / _self.Column.categories
+										.length
+								}
+							}
+						});
 					}
 				});
+
+
 			},
 			touchColumn(e) {
 				canvaColumn.showToolTip(e, {
@@ -351,119 +459,412 @@
 
 			// 折线图
 			showArea(canvasId, chartData) {
-				canvaArea = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'area',
-					fontSize: 11,
-					legend: true,
-					dataLabel: false,
-					dataPointShape: true,
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					categories: _self.Area.categories,
-					series: _self.Area.series,
-					animation: true,
-					xAxis: {
-						type: 'grid',
-						gridColor: '#CCCCCC',
-						gridType: 'dash',
-						dashLength: 8
-					},
-					yAxis: {
-						gridType: 'dash',
-						gridColor: '#CCCCCC',
-						dashLength: 8,
-						splitNumber: 5,
-						min: 10,
-						max: 180,
-					},
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						area: {
-							type: 'curve',
-							opacity: 1,
-							addLine: true,
-							width: 2,
-							gradient:true
-						}
+				let opts = {
+					url: 'tj/plat',
+					method: 'post',
+					data: {}
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts, {
+					kssj: this.getDatesWithinSevenDays(7).futureDate,
+					jssj: this.getDatesWithinSevenDays(7).currentDate
+				}).then(res => {
+					console.log('dasdasd', res);
+					uni.hideLoading();
+					_self.Area.series[0].data = []
+					_self.Area.categories = []
+					if (res.statusCode == 200) {
+						res.data.map(item => {
+							const num = item.tap + item.xxl + item.weixin
+							_self.Area.series[0].data.push(num)
+							_self.Area.categories.push(item.zb)
+						});
+						canvaArea = new uCharts({
+							$this: _self,
+							canvasId: canvasId,
+							type: 'area',
+							fontSize: 11,
+							legend: true,
+							dataLabel: false,
+							dataPointShape: true,
+							background: '#FFFFFF',
+							pixelRatio: _self.pixelRatio,
+							categories: _self.Area.categories,
+							series: _self.Area.series,
+							animation: true,
+							xAxis: {
+								type: 'grid',
+								gridColor: '#CCCCCC',
+								gridType: 'dash',
+								dashLength: 8,
+								itemCount: 5
+							},
+							enableScroll: true,
+							yAxis: {
+								gridType: 'dash',
+								gridColor: '#CCCCCC',
+								dashLength: 8,
+								splitNumber: 5,
+								min: 10,
+								max: 180,
+							},
+							width: _self.cWidth * _self.pixelRatio,
+							height: _self.cHeight * _self.pixelRatio,
+							extra: {
+								area: {
+									type: 'curve',
+									opacity: 1,
+									addLine: true,
+									width: 2,
+									gradient: true
+								}
+							}
+						});
 					}
 				});
+
 			},
 			touchArea(e) {
 				canvaArea.showToolTip(e, {
 					format: function(item, category) {
-						return item.name + ' ' + category + ' ' + ':' + item.data+" 人"
+						return item.name + ' ' + category + ' ' + ':' + item.data + " 人"
 					}
 				});
 			},
 
 			// 折线图
-			showArea1(canvasId, chartData) {
-				canvaArea1 = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'area',
-					fontSize: 11,
-					legend: true,
-					dataLabel: false,
-					dataPointShape: true,
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					categories: _self.Area1.categories,
-					series: _self.Area1.series,
-					animation: true,
-					xAxis: {
-						type: 'grid',
-						gridColor: '#CCCCCC',
-						gridType: 'dash',
-						dashLength: 8
-					},
-					yAxis: {
-						gridType: 'dash',
-						gridColor: '#CCCCCC',
-						dashLength: 8,
-						splitNumber: 5,
-						min: 10,
-						max: 180,
-					},
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						area: {
-							type: 'curve',
-							opacity: 1,
-							addLine: true,
-							width: 2,
-							gradient:true
+			async showArea1(canvasId, chartData) {
+				let opts = {
+					url: 'tj/plat',
+					method: 'post',
+					data: {}
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts, {
+						kssj: this.getDatesWithinSevenDays(7).futureDate,
+						jssj: this.getDatesWithinSevenDays(7).currentDate
+					})
+
+					.then(res => {
+						console.log('dasdasd', res);
+						uni.hideLoading();
+						_self.Area1.categories = []
+						_self.Area1.series[0].data = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								_self.Area1.series[0].data.push(item.je)
+								_self.Area1.categories.push(item.zb)
+							});
+							console.log(_self.Area1)
+
+							canvaArea1 = new uCharts({
+								$this: _self,
+								canvasId: canvasId,
+								type: 'area',
+								fontSize: 11,
+								legend: true,
+								dataLabel: false,
+								dataPointShape: true,
+								background: '#FFFFFF',
+								pixelRatio: _self.Area1.pixelRatio,
+								categories: _self.Area1.categories,
+								series: _self.Area1.series,
+								animation: true,
+								enableScroll: true,
+								xAxis: {
+									type: 'grid',
+									gridColor: '#CCCCCC',
+									gridType: 'dash',
+									dashLength: 8,
+									itemCount: 5
+								},
+								yAxis: {
+									gridType: 'dash',
+									gridColor: '#CCCCCC',
+									dashLength: 8,
+									splitNumber: 5,
+									min: 10,
+									max: 180,
+								},
+								width: _self.cWidth * _self.pixelRatio,
+								height: _self.cHeight * _self.pixelRatio,
+								extra: {
+									area: {
+										type: 'curve',
+										opacity: 1,
+										addLine: true,
+										width: 2,
+										gradient: true
+									}
+								}
+							});
 						}
-					}
-				});
+					});
+
 			},
 			touchArea1(e) {
 				canvaArea1.showToolTip(e, {
 					format: function(item, category) {
-						return item.name + ' ' + category + ' ' + ':' + item.data+" 元"
+						return item.name + ' ' + category + ' ' + ':' + item.data + " 元"
 					}
 				});
 			},
-			sectionChange(index) {
+			sectionChange(index, btn, type) {
 				var that = this
-				that.current = index;
+				let kssj = ''
+				let jssj = ''
+				if (type == 1) {
+					this.current = index
+					if (index == 3) {
+						that.showCa = true
+						this.currnetIndexDate = 1
+					} else {
+						this.currentRange1 = "更多日期"
+						kssj = that.getDatesWithinSevenDays(btn).futureDate
+						jssj = that.getDatesWithinSevenDays(btn).currentDate
+					}
 
-				if (index == 3) {
-					that.showCa = true
-				} else {
-					this.currentRange = ""
+					let opts = {
+						url: 'tj/plat',
+						method: 'post',
+						data: {}
+					};
+					uni.showLoading({
+						title: '加载中'
+					})
+					request.httpRequest(opts, {
+						kssj: kssj,
+						jssj: jssj
+					}).then(res => {
+						uni.hideLoading();
+						_self.Area.series[0].data = []
+						_self.Area.categories = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								const num = item.tap + item.xxl + item.weixin
+								_self.Area.series[0].data.push(num)
+								_self.Area.categories.push(item.zb)
+							});
+							canvaArea.updateData({
+								categories: _self.Area.categories,
+								series: _self.Area.series,
+							})
+						}
+					});
+
+
 				}
+				if (type == 2) {
+					this.current1 = index
+					if (index == 3) {
+						that.showCa = true
+						this.currnetIndexDate = 2
+					} else {
+						this.currentRange3 = "更多日期"
+						kssj = that.getDatesWithinSevenDays(btn).futureDate
+						jssj = that.getDatesWithinSevenDays(btn).currentDate
+
+						let opts = {
+							url: 'tj/plat',
+							method: 'post',
+							data: {}
+						};
+						uni.showLoading({
+							title: '加载中'
+						})
+						request.httpRequest(opts, {
+							kssj: kssj,
+							jssj: jssj
+						}).then(res => {
+							uni.hideLoading();
+							_self.Area1.series[0].data = []
+							_self.Area1.categories = []
+							if (res.statusCode == 200) {
+								res.data.map(item => {
+									_self.Area1.series[0].data.push(item.je)
+									_self.Area1.categories.push(item.zb)
+								});
+								canvaArea1.updateData({
+									categories: _self.Area1.categories,
+									series: _self.Area1.series,
+								})
+							}
+						});
+					}
+
+				}
+				if (type == 3) {
+					this.current2 = index
+					if (index == 3) {
+						that.showCa = true
+						this.currnetIndexDate = 3
+
+					} else {
+						this.currentRange3 = "更多日期"
+						kssj = that.getDatesWithinSevenDays(btn).futureDate
+						jssj = that.getDatesWithinSevenDays(btn).currentDate
+					}
+
+
+					let opts = {
+						url: 'tj/plat',
+						method: 'post',
+						data: {}
+					};
+					uni.showLoading({
+						title: '加载中'
+					})
+					request.httpRequest(opts, {
+						kssj: kssj,
+						jssj: jssj
+					}).then(res => {
+						uni.hideLoading();
+						_self.Column.series[0].data = []
+						_self.Column.series[1].data = []
+						_self.Column.series[2].data = []
+						_self.Column.categories = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								_self.Column.series[0].data.push(item.weixin)
+								_self.Column.series[1].data.push(item.tap)
+								_self.Column.series[2].data.push(item.xxl)
+								_self.Column.categories.push(item.zb)
+							});
+
+							canvaColumn.updateData({
+								series: _self.Column.series,
+								categories: _self.Column.categories
+							})
+						}
+					});
+				}
+
 
 			},
 			dateConfirm(e) {
-				this.currentRange = e.startDate + " ~ " + e.endDate
+				if (this.currnetIndexDate == 1) {
+					this.currentRange1 = e.startDate + " ~ " + e.endDate
+					 let opts = {
+					 	url: 'tj/plat',
+					 	method: 'post',
+					 	data: {}
+					 };
+					 uni.showLoading({
+					 	title: '加载中'
+					 })
+					 request.httpRequest(opts, {
+					 	kssj: e.startDate,
+					 	jssj: e.endDate
+					 }).then(res => {
+					 	uni.hideLoading();
+					 	_self.Area.series[0].data = []
+					 	_self.Area.categories = []
+					 	if (res.statusCode == 200) {
+					 		res.data.map(item => {
+					 			_self.Area.series[0].data.push(item.je)
+					 			_self.Area.categories.push(item.zb)
+					 		});
+					 		canvaArea.updateData({
+					 			categories: _self.Area.categories,
+					 			series: _self.Area.series,
+					 		})
+					 	}
+					 });
+				}
+				if (this.currnetIndexDate == 2) {
+					this.currentRange2 = e.startDate + " ~ " + e.endDate
+					let opts = {
+						url: 'tj/plat',
+						method: 'post',
+						data: {}
+					};
+					uni.showLoading({
+						title: '加载中'
+					})
+					request.httpRequest(opts, {
+						kssj: e.startDate,
+						jssj: e.endDate
+					}).then(res => {
+						uni.hideLoading();
+						_self.Area1.series[0].data = []
+						_self.Area1.categories = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								_self.Area1.series[0].data.push(item.je)
+								_self.Area1.categories.push(item.zb)
+							});
+							canvaArea1.updateData({
+								categories: _self.Area1.categories,
+								series: _self.Area1.series,
+							})
+						}
+					});
+				}
+				if (this.currnetIndexDate == 3) {
+					this.currentRange3 = e.startDate + " ~ " + e.endDate
+					let opts = {
+						url: 'tj/plat',
+						method: 'post',
+						data: {}
+					};
+					uni.showLoading({
+						title: '加载中'
+					})
+					request.httpRequest(opts, {
+						kssj: e.startDate,
+						jssj: e.endDate
+					}).then(res => {
+						uni.hideLoading();
+						_self.Column.series[0].data = []
+						_self.Column.series[1].data = []
+						_self.Column.series[2].data = []
+						_self.Column.categories = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								_self.Column.series[0].data.push(item.weixin)
+								_self.Column.series[1].data.push(item.tap)
+								_self.Column.series[2].data.push(item.xxl)
+								_self.Column.categories.push(item.zb)
+							});
+					
+							canvaColumn.updateData({
+								series: _self.Column.series,
+								categories: _self.Column.categories
+							})
+						}
+					});
+				}
 				// this.currentRange = e.startMonth+"/"+e.startDay+"~"+e.endMonth+"/"+e.endDay
 			},
-			closeCa() {}
+			closeCa() {},
+			getDatesWithinSevenDays(day) {
+				// 获取当前日期
+				let currentDate = new Date();
+
+				// 获取未来7天的日期
+				let futureDate = new Date();
+				futureDate.setDate(currentDate.getDate() - day + 1);
+
+				// 格式化日期为 "YYYY-MM-DD"
+				function formatDate(date) {
+					let year = date.getFullYear();
+					let month = String(date.getMonth() + 1).padStart(2, '0');
+					let day = String(date.getDate()).padStart(2, '0');
+					return `${year}-${month}-${day}`;
+				}
+
+				// 返回当前日期和未来7天的日期
+				return {
+					currentDate: formatDate(currentDate),
+					futureDate: formatDate(futureDate)
+				};
+			}
+
+
 		}
 	};
 </script>

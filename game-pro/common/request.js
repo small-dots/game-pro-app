@@ -1,6 +1,6 @@
 
 // const baseUrl = 'https://cdn.zhoukaiwen.com/';
-const baseUrl = 'https://www.zhoukaiwen.com/';
+const baseUrl = 'http://49.232.128.232/api/';
 
 
 // 不带token请求
@@ -31,6 +31,7 @@ const httpRequest = (opts, data) => {
 	let promise = new Promise(function(resolve, reject) {
 		uni.request(httpDefaultOpts).then(
 			(res) => {
+				console.log('dsad',res)
 				resolve(res[1])
 			}
 		).catch(
