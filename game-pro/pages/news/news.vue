@@ -1,62 +1,57 @@
 <!-- 新闻 详情 -->
 <template>
 	<view class="container">
-		<view style="background-color: #FFFFFF;padding: 30rpx 30rpx 30rpx 30rpx;">
-			<view class="titleBox text-xl text-black text-bold">{{getData.title}}</view>
-			<view class="timeBox text-df text-gray margin-top-sm margin-bottom-sm">{{getData.time}}</view>
-			<image mode="widthFix" :src="getData.tImg"></image>
 
-			<!-- 中间文章区域 -->
-			<view class="contentBox text-lg text-black margin-top-sm margin-tb-lg">
-				<view v-html="getData.introduceText"></view>
-			</view>
-			
-			<image v-for="(item, index) in getData.introduceImg" :key="index" mode="widthFix" :src="item"></image>
-		</view>
-		
-		<view style="background-color: #FFFFFF;padding: 0rpx 30rpx 15rpx0rpx;margin: 25rpx 0 170rpx 0;">
-			<view class="cu-bar justify-left bg-white">
-				<view class="action border-title">
-					<text class="text-lg text-bold text-blue">评论</text>
-					<text class="bg-gradual-blue" style="width:3rem"></text>
+		<!-- 中间文章区域 -->
+		<view class="safe-area-inset-bottom">
+			<view class="u-demo-block">
+				<text class="u-demo-block__title">CDK</text>
+				<view class="u-demo-block__content">
+					<u-input placeholder="请输入CDK" v-model="title" focus :border="true" clearable></u-input>
 				</view>
-			</view>
 
-			<!-- <view class="text-lg text-bold text-center margin-bottom-lg">暂无评论</view> -->
-
-			<view class="cu-list menu-avatar comment solids-top">
-				<view class="cu-item" >
-					<view class="cu-avatar round" style="background-image:url(http://1.85.32.5:49000/daxiang/common/20200918181604.png);"></view>
-					<view class="content">
-						<view class="text-grey">凯文童鞋</view>
-						<view class="text-gray text-content text-df">
-							速速前来围观吧～
-						</view>
-						<view class="margin-top-sm flex justify-between">
-							<view class="text-gray text-df">2021.12.05</view>
-						</view>
-					</view>
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">奖励1</text>
+				<view class="u-demo-block__content flex_row">
+					<u-input style="margin-right:10rpx" placeholder="请输入奖励1" v-model="title" focus :border="true"
+						clearable></u-input>
+					<u-number-box :input-height="70" color="#fff" bg-color="#ef6c19" v-model="jl1_num"></u-number-box>
 				</view>
-			</view>
-		</view>
-
-		<!-- 底部评论 -->
-		<view class="bottomBox solids-top">
-			<view class="cu-bar input">
-				<input v-model="comment_input" @confirm="send_btn" confirm-type="send" class="solid" maxlength="300" cursor-spacing="10" placeholder="说说你的看法.."></input>
-				<!-- <view class="action">
-					<button style="background: transparent;" open-type="share" hover-class='none'>
-						<text class="cuIcon-share text-grey"></text>
-					</button>
-				</view> -->
-				<view class="action">
-					<view class="cuIcon-appreciatefill text-grey" @click="praiseClick">
-						<view class="cu-tag badge" style="top: 6rpx; right: 28rpx;">{{getData.praise || 0}}</view>
-					</view>
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">奖励1</text>
+				<view class="u-demo-block__content flex_row">
+					<u-input style="margin-right:10rpx" placeholder="请输入奖励1" v-model="title" focus :border="true"
+						clearable></u-input>
+					<u-number-box :input-height="70" color="#fff" bg-color="#ef6c19" v-model="jl1_num"></u-number-box>
 				</view>
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">奖励1</text>
+				<view class="u-demo-block__content flex_row">
+					<u-input style="margin-right:10rpx" placeholder="请输入奖励1" v-model="title" focus :border="true"
+						clearable></u-input>
+					<u-number-box :input-height="70" color="#fff" bg-color="#ef6c19" v-model="jl1_num"></u-number-box>
+				</view>
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">奖励1</text>
+				<view class="u-demo-block__content flex_row">
+					<u-input style="margin-right:10rpx" placeholder="请输入奖励1" v-model="title" focus :border="true"
+						clearable></u-input>
+					<u-number-box :input-height="70" color="#fff" bg-color="#ef6c19" v-model="jl1_num"></u-number-box>
+				</view>
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">奖励1</text>
+				<view class="u-demo-block__content flex_row">
+					<u-input style="margin-right:10rpx" placeholder="请输入奖励1" v-model="title" focus :border="true"
+						clearable></u-input>
+					<u-number-box :input-height="70" color="#fff" bg-color="#ef6c19" v-model="jl1_num"></u-number-box>
+				</view>
+
+				<text class="u-demo-block__title" style="margin-top: 20rpx;">过期日期</text>
+				<view class="u-demo-block__content">
+					<uni-datetime-picker type="date" :clear-icon="false" v-model="currentDate" />
+				</view>
+				<view class="u-demo-block__content" style="margin-top: 20px;">
+					<u-button type="primary" @click="publish">确认添加</u-button>
+				</view>
+				<u-toast ref="uToast" position="top" />
+
 			</view>
 		</view>
-		<view class="safe-area-inset-bottom"></view>
 	</view>
 </template>
 
@@ -72,8 +67,8 @@
 				getData: [],
 
 				newsId: '',
-				
-				comment_input:'',	//评论内容
+				jl1_num: 0,
+				comment_input: '', //评论内容
 				praiseType: 0, //1点赞  2取消点赞
 			}
 		},
@@ -127,7 +122,7 @@
 				})
 			},
 			// 评论
-			send_btn(){
+			send_btn() {
 				// console.log(this.comment_input);
 				let optsList = {
 					url: 'south/southEasyLessonEvaluate/xcx/evaluate',
@@ -135,7 +130,7 @@
 				};
 				let paramsList = {
 					articleId: this.detailsId,
-					describ: this.comment_input, 
+					describ: this.comment_input,
 				};
 				request.httpTokenRequest(optsList, paramsList).then(res => {
 					if (res.data.code === 200) {
@@ -167,7 +162,7 @@
 	}
 
 	.container {
-		background-color: #f2f2f2;
+		background-color: #fff;
 		width: 750rpx;
 
 	}
@@ -186,5 +181,33 @@
 		position: fixed;
 		left: 0;
 		bottom: 0rpx;
+	}
+
+	.u-demo-block {
+		padding: 40rpx;
+		margin: 10rpx 15rpx;
+		border-radius: 10rpx;
+		background: #fff;
+		box-shadow: #fff 0 0 2px;
+
+		.flex_row {
+			display: flex;
+
+			.u-input:nth-child(2) {
+				width: 30rpx;
+			}
+		}
+
+		.u-demo-block__title {
+			font-size: 14px;
+			color: #8f9ca2;
+			margin-bottom: 8px;
+			display: flex;
+			flex-direction: row;
+		}
+	}
+
+	.uni-calendar--fixed {
+		z-index: 9999
 	}
 </style>

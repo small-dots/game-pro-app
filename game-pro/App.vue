@@ -40,4 +40,7 @@
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import "uview-ui/index.scss";
+	.uni-fab__circle--rightBottom{
+		bottom: 60px !important;
+	}
 </style>
