@@ -1,6 +1,6 @@
 
 // const baseUrl = 'https://cdn.zhoukaiwen.com/';
-const baseUrl = 'http://49.232.128.232/api/';
+const baseUrl = 'http://123.57.95.72:8013/api/';
 
 
 // 不带token请求

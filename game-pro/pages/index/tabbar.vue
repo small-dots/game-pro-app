@@ -26,7 +26,7 @@
 
 				<view @click="NavChange" class="action text-gray add-action" data-cur="cases">
 					<image class="logo_btn" mode="widthFix" src="../../static/logo.png"></image>
-					<view :class="PageCur=='cases'?'color_main':'text-gray'">外挂检测</view>
+					<view :class="PageCur=='cases'?'color_main':'text-gray'">全服通报</view>
 				</view>
 
 				<view class="action" @click="NavChange" data-cur="news">

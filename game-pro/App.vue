@@ -40,7 +40,16 @@
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import "uview-ui/index.scss";
-	.uni-fab__circle--rightBottom{
+	.uni-fab__circle--rightBottom,.uni-fab--rightBottom{
 		bottom: 60px !important;
+	}
+	.uni-fab__item{
+		height: 35px !important;
+	}
+	.uni-fab__item:last-child{
+		height: 55px !important;
+	}
+	.uni-fab__content--flexDirectionEnd{
+		height: fit-content;
 	}
 </style>

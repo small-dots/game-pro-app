@@ -11,13 +11,18 @@
 				<u-input placeholder="请输入公告标题" v-model="title" focus :border="true" clearable></u-input>
 			</view>
 
+			<text class="u-demo-block__title">类型</text>
+			<view class="u-demo-block__content">
+				<uni-data-select v-model="type" :localdata="range" placeholder="" :clear="false"></uni-data-select>
+			</view>
+
 
 			<text class="u-demo-block__title" style="margin-top: 20rpx;">公告内容</text>
 			<view class="u-demo-block__content">
 				<u-input placeholder="请输入公告内容" v-model="content" height="200" type="textarea" :border="true"
 					clearable></u-input>
 			</view>
-			
+
 			<text class="u-demo-block__title" style="margin-top: 20rpx;">过期日期</text>
 			<view class="u-demo-block__content">
 				<uni-datetime-picker type="date" :clear-icon="false" v-model="currentDate" />
@@ -55,7 +60,17 @@
 				content: '',
 				tipTitle: "发布成功",
 				description: '大叔大婶',
-				showA: false
+				showA: false,
+				type: '',
+				range: [{
+						value: 1,
+						text: "邮件"
+					},
+					{
+						value: 2,
+						text: "公告"
+					},
+				]
 			}
 		},
 		components: {
@@ -89,7 +104,7 @@
 					gqsj: this.currentDate,
 					ggnr: this.content,
 					bt: this.title,
-					type: '2'
+					type: this.type
 				}
 				uni.showLoading({
 					title: '加载中'
@@ -106,6 +121,7 @@
 						this.title = ""
 						this.content = ""
 						this.currentDate = ""
+						this.type=""
 					}
 				});
 			},
@@ -135,11 +151,13 @@
 			font-size: 14px;
 			color: #8f9ca2;
 			margin-bottom: 8px;
+			margin-top: 16px;
 			display: flex;
 			flex-direction: row;
 		}
 	}
-	.uni-calendar--fixed{
+
+	.uni-calendar--fixed {
 		z-index: 9999
 	}
 </style>

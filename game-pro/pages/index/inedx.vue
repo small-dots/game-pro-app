@@ -6,40 +6,6 @@
 			<block slot="content">数据概览</block>
 		</cu-custom>
 
-		<!-- <add-tip :tip="tip" :duration="duration" /> -->
-
-		<!-- banner图 -->
-		<!-- <view class="uni-padding-wrap">
-			<view class="page-section swiper">
-				<view class="page-section-spacing">
-					<swiper class="swiper" circular="true" indicator-dots="true" autoplay="true" interval="3500"
-						duration="600">
-						<swiper-item class="swiper-list" v-for="(item, index) in bannerList" :key="index">
-							<view class="swiper-item uni-bg-red">
-								<image class="swiper-img" :src="item.imageUrl" mode=""></image>
-							</view>
-						</swiper-item>
-					</swiper>
-				</view>
-			</view>
-		</view> -->
-
-		<!-- 流量主-腾讯广告 -->
-
-		<!-- 导航栏 -->
-		<!-- <view class="cu-list grid solids-bottom col-4 no-border">
-			<view class="cu-item" v-for="(item, index) in categories" :key="index"
-				:style="[{ animation: 'show ' + ((index + 1) * 0.2 + 1) + 's 1' }]" @click="goCategorieslist"
-				:data-mid="item.mid">
-				<view :class="['cuIcon-' + item.cuIcon, 'text-' + item.color]">
-					<view class="cu-tag badge" v-if="item.count != 0">
-						<block v-if="item.badge != 1">{{ item.badge > 99 ? '99+' : item.badge }}</block>
-					</view>
-				</view>
-				<text>{{ item.name }}</text>
-			</view>
-		</view> -->
-
 		<view class="padding-cust">
 			<!-- 卡片组 -->
 			<view class="cards">
@@ -223,6 +189,8 @@
 				</view>
 			</view>
 		</view>
+		<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical"
+			:direction="direction" @trigger="trigger" />
 
 		<u-calendar mode="range" v-model="showCa" @change="dateConfirm" @close="closeCa"></u-calendar>
 		<view style="height: 140rpx;width: 1rpx;"></view>
@@ -258,6 +226,20 @@
 				current: 1,
 				current1: 1,
 				current2: 1,
+				title: 'uni-fab',
+				directionStr: '垂直',
+				horizontal: 'right',
+				vertical: 'bottom',
+				direction: 'vertical',
+				pattern: {
+					color: '#000',
+					backgroundColor: '#fff',
+					selectedColor: '#264dfd',
+					buttonColor: '#264dfd',
+					iconColor: '#fff',
+					icon: "bars",
+				},
+				content: [],
 				// 柱状图
 				"Column": {
 					"categories": [],
@@ -303,7 +285,9 @@
 				totalUser: 0,
 				onlineUser: 0,
 				addAmount: 0,
-				totalAmount: 0
+				totalAmount: 0,
+				serverList: [],
+				currentServer: ""
 			};
 		},
 		onLoad() {
@@ -313,12 +297,49 @@
 			_self = this;
 			this.cWidth = uni.upx2px(700);
 			this.cHeight = uni.upx2px(420);
-			this.getServerData();
-			this.getStaticData();
-			this.getStaticData1();
-			this.getStaticData2();
+			this.getServerList();
 		},
 		methods: {
+			getServerList() {
+				let opts = {
+					url: 'tj/server/list',
+					method: 'get'
+				};
+				uni.showLoading({
+					title: '加载中'
+				})
+				request.httpRequest(opts).then(res => {
+					console.log('ssss', res);
+					uni.hideLoading();
+					if (res.statusCode == 200) {
+						this.serverList = res.data.data || []
+						this.content = res.data.data.map((item, index) => ({
+							text: item.name,
+							active: index === 0
+						}))
+						this.currentServer = this.serverList[0].id
+						this.getStaticData1()
+						this.getServerData();
+						this.getStaticData();
+						this.getStaticData2();
+					}
+				});
+			},
+			trigger(e) {
+				console.log(e)
+				this.content[e.index].active = !e.item.active
+				uni.showModal({
+					title: '提示',
+					content: `您${this.content[e.index].active ? '选中了' : '取消了'}${e.item.text}`,
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定')
+						} else if (res.cancel) {
+							console.log('用户点击取消')
+						}
+					}
+				})
+			},
 			getStaticData() {
 				let opts = {
 					url: 'tj/login/count',
@@ -339,17 +360,21 @@
 			getStaticData1() {
 				let opts = {
 					url: 'tj/today/amount',
-					method: 'get'
+					method: 'get',
+
 				};
+				console.log('opts', opts)
 				uni.showLoading({
 					title: '加载中'
 				})
-				request.httpRequest(opts).then(res => {
+				request.httpRequest(opts, {
+					fwqId: this.currentServer
+				}).then(res => {
 					console.log(res);
 					uni.hideLoading();
 					if (res.statusCode == 200) {
-						this.addAmount = res.data.data.today;
-						this.totalAmount = res.data.data.all;
+						this.addAmount = res.data.data.today/100;
+						this.totalAmount = res.data.data.all/100;
 					}
 				});
 			},
@@ -387,6 +412,7 @@
 					title: '加载中'
 				})
 				request.httpRequest(opts, {
+					fwqId:this.currentServer,
 					kssj: this.getDatesWithinSevenDays(7).futureDate,
 					jssj: this.getDatesWithinSevenDays(7).currentDate
 				}).then(res => {
@@ -402,7 +428,10 @@
 							_self.Column.series[0].data.push(item.weixin)
 							_self.Column.series[1].data.push(item.tap)
 							_self.Column.series[2].data.push(item.xxl)
-							_self.Column.categories.push(item.zb)
+							var x = item.zb.split('-')
+							x.shift()
+							x = x.join('-')
+							_self.Column.categories.push(x)
 						});
 
 						canvaColumn = new uCharts({
@@ -479,7 +508,10 @@
 						res.data.map(item => {
 							const num = item.tap + item.xxl + item.weixin
 							_self.Area.series[0].data.push(num)
-							_self.Area.categories.push(item.zb)
+							var x = item.zb.split('-')
+							x.shift()
+							x=x.join('-')
+							_self.Area.categories.push(x)
 						});
 						canvaArea = new uCharts({
 							$this: _self,
@@ -556,8 +588,11 @@
 						_self.Area1.series[0].data = []
 						if (res.statusCode == 200) {
 							res.data.map(item => {
-								_self.Area1.series[0].data.push(item.je)
-								_self.Area1.categories.push(item.zb)
+								_self.Area1.series[0].data.push(item.je/100)
+								var x = item.zb.split('-')
+								x.shift()
+								x=x.join('-')
+								_self.Area1.categories.push(x)
 							});
 							console.log(_self.Area1)
 
@@ -647,7 +682,11 @@
 							res.data.map(item => {
 								const num = item.tap + item.xxl + item.weixin
 								_self.Area.series[0].data.push(num)
-								_self.Area.categories.push(item.zb)
+								var x = item.zb.split('-')
+								x.shift()
+								x=x.join('-')
+								_self.Area.categories.push(x)
+								
 							});
 							canvaArea.updateData({
 								categories: _self.Area.categories,
@@ -685,8 +724,11 @@
 							_self.Area1.categories = []
 							if (res.statusCode == 200) {
 								res.data.map(item => {
-									_self.Area1.series[0].data.push(item.je)
-									_self.Area1.categories.push(item.zb)
+									_self.Area1.series[0].data.push(item.je/100)
+									var x = item.zb.split('-')
+									x.shift()
+									x=x.join('-')
+									_self.Area1.categories.push(x)
 								});
 								canvaArea1.updateData({
 									categories: _self.Area1.categories,
@@ -732,7 +774,11 @@
 								_self.Column.series[0].data.push(item.weixin)
 								_self.Column.series[1].data.push(item.tap)
 								_self.Column.series[2].data.push(item.xxl)
-								_self.Column.categories.push(item.zb)
+								var x = item.zb.split('-')
+								x.shift()
+								x=x.join('-')
+								_self.Column.categories.push(x)
+								
 							});
 
 							canvaColumn.updateData({
@@ -748,32 +794,32 @@
 			dateConfirm(e) {
 				if (this.currnetIndexDate == 1) {
 					this.currentRange1 = e.startDate + " ~ " + e.endDate
-					 let opts = {
-					 	url: 'tj/plat',
-					 	method: 'post',
-					 	data: {}
-					 };
-					 uni.showLoading({
-					 	title: '加载中'
-					 })
-					 request.httpRequest(opts, {
-					 	kssj: e.startDate,
-					 	jssj: e.endDate
-					 }).then(res => {
-					 	uni.hideLoading();
-					 	_self.Area.series[0].data = []
-					 	_self.Area.categories = []
-					 	if (res.statusCode == 200) {
-					 		res.data.map(item => {
-					 			_self.Area.series[0].data.push(item.je)
-					 			_self.Area.categories.push(item.zb)
-					 		});
-					 		canvaArea.updateData({
-					 			categories: _self.Area.categories,
-					 			series: _self.Area.series,
-					 		})
-					 	}
-					 });
+					let opts = {
+						url: 'tj/plat',
+						method: 'post',
+						data: {}
+					};
+					uni.showLoading({
+						title: '加载中'
+					})
+					request.httpRequest(opts, {
+						kssj: e.startDate,
+						jssj: e.endDate
+					}).then(res => {
+						uni.hideLoading();
+						_self.Area.series[0].data = []
+						_self.Area.categories = []
+						if (res.statusCode == 200) {
+							res.data.map(item => {
+								_self.Area.series[0].data.push(item.je)
+								_self.Area.categories.push(item.zb)
+							});
+							canvaArea.updateData({
+								categories: _self.Area.categories,
+								series: _self.Area.series,
+							})
+						}
+					});
 				}
 				if (this.currnetIndexDate == 2) {
 					this.currentRange2 = e.startDate + " ~ " + e.endDate
@@ -830,7 +876,7 @@
 								_self.Column.series[2].data.push(item.xxl)
 								_self.Column.categories.push(item.zb)
 							});
-					
+
 							canvaColumn.updateData({
 								series: _self.Column.series,
 								categories: _self.Column.categories
