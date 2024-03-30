@@ -112,12 +112,13 @@
 				request.httpRequest(opts, data).then(res => {
 					console.log(res);
 					uni.hideLoading();
-					if (res.statusCode == 200) {
+					
+					if (res.data.code == 0) {
 						this.$refs.uTips.show({
 							title: '发布成功',
-							type: 'success',
-							duration: '10000'
+							type: 'success'
 						})
+						
 						this.title = ""
 						this.content = ""
 						this.currentDate = ""

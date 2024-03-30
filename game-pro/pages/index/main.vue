@@ -31,7 +31,7 @@
 	import uInput from "@/uview-ui/components/u-input/u-input.vue"
 	import request from '@/common/request.js';
 	import "@/common/stomp.js"
-	import "@/common/sockjs.min.js"
+	import  * as SK from  "@/common/sockjs.min.js"
 
 	export default {
 		data() {
@@ -116,33 +116,42 @@
 				this.stompClient = [];
 
 				this.servers.map((s, i) => {
-					console.log('3123', window)
+					console.log('31231',SK,SK.default)
 					console.log(';l;', `ws://${s.ip}:8099/endpoint-websocket`);
-					const socketTask = uni.connectSocket({
-						url: `ws://${s.ip}:8099/endpoint-websocket`,
-						success:(e)=>{
-							console.log(e)
-							if(e.errMsg =='connectSocket:ok'){
-								console.log(1)
-							}
-						},
-					})
-					// const socket = new SockJS(`http://${s.ip}:8099/endpoint-websocket`); //连接上端点(基站)
+					// const socketTask = uni.connectSocket({
+					// 	url: `ws://${s.ip}:8099/endpoint-websocket`,
+					// 	success:(e)=>{
+					// 		console.log(e)
+					// 		if(e.errMsg =='connectSocket:ok'){
+					// 			console.log(1)
+					// 		}
+					// 	},
+					// })
+					const socketTask = new SK.default(`http://${s.ip}:8099/endpoint-websocket`); //连接上端点(基站)
+					console.log('socketTask',socketTask)
 					const SC = Stomp.over(socketTask); //用stom进行包装，规范协议
 					SC.connect({}, (con) => {
 						console.log(con, '连接毁掉');
 						if (con.command == 'CONNECTED') {
 							console.log('连接成功>..');
 							SC.send('/app/public/game_rank', {}, JSON.stringify({
-								content: `<color=#ffffff>${formData.xxnr}</color>`
+								content: `<color=#ffffff>${content}</color>`
 							}));
-							stompClient.value.push(SC);
+							this.stompClient.push(SC);
+							this.$refs.uToast.show({
+								title: '发送成功！',
+								type: 'success',
+								position: "top"
+							})
+							setTimeout(()=>{
+								this.content = ''
+							},1000)
 						}
-						SC.subscribe('/topic/game_rank', function(result) {
+						SC.subscribe(`http://${s.ip}/topic/game_rank`, function(result) {
 								console.log('result=' + result);
 							}),
 							(e) => {
-								console.log(e);
+								console.log('sdasda',e);
 							};
 					});
 				});

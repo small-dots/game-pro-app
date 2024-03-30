@@ -86,69 +86,12 @@
 					buttonColor: '#007AFF',
 					iconColor: '#fff'
 				},
-				avatar: [
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg',
-					'https://ossweb-img.qq.com/images/lol/web201310/skin/big91012.jpg'
-				],
-
 				orderList: [
 					[],
 					[],
 					[],
 					[]
 				],
-				dataList: [{
-						id: 1,
-						store: '小班课 · 1班',
-						progre: 60,
-						goodsList: [{
-							goodsUrl: 'http://cdn.zhoukaiwen.com/web2.jpg',
-							title: '第一阶段·5课时',
-							type: '课程名称：《vue-router全局导航守卫》，简介：导航首位就是变化的路由钩子...',
-							teacher: '王老师',
-							number: 2
-						}]
-					},
-					{
-						id: 2,
-						store: '精品课 · 2班',
-						progre: 39,
-						goodsList: [{
-							goodsUrl: 'http://cdn.zhoukaiwen.com/web1.jpg',
-							title: 'Promise的链式调用',
-							type: 'Promise 必须为以下三种状态之一：等待态（Pending）、执行态（Fulfilled）和拒绝态（Rejected）。一旦Promise 被 resolve 或 reject，不能再迁移至其他任何状态（即状态 immutable）。',
-							teacher: 'Lee老师',
-							number: 1
-						}]
-					},
-					{
-						id: 3,
-						store: '小班课 · 3班',
-						progre: 55,
-						goodsList: [{
-							goodsUrl: 'http://cdn.zhoukaiwen.com/web2.jpg',
-							title: '基于vue应用中实用的性能技巧',
-							type: '1.封装项目的基础库；2.层级管理；3.缓存；4.延迟加载；5.工程化-webpack的改进；6.控制代码质量；7.自动化部署等优化方案',
-							teacher: '王老师',
-							number: 3
-						}]
-					},
-					{
-						id: 4,
-						store: '小班课 · 4班',
-						progre: 80,
-						goodsList: [{
-							goodsUrl: 'http://cdn.zhoukaiwen.com/web1.jpg',
-							title: '变量提升及函数提升',
-							type: '引擎在读取js代码的过程中,分为两步。第一个步骤是整个js代码的解析读取,第二个步骤是执行',
-							teacher: '王老师',
-							number: 9
-						}]
-					}
-				],
-
 				current: 0,
 				swiperCurrent: 0,
 				tabsHeight: 0,
